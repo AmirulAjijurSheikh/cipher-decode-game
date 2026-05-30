@@ -5,12 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Cipher Decode Game</title>
   <style>
-    /* ===== RESET & BASE ===== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       min-height: 100vh;
@@ -22,11 +17,7 @@
       justify-content: center;
     }
 
-    /* ===== WELCOME SCREEN ===== */
-    .screen {
-      display: none;
-    }
-
+    .screen { display: none; }
     .screen.active {
       display: flex;
       flex-direction: column;
@@ -37,7 +28,6 @@
       padding: 2rem;
     }
 
-    /* ===== TITLE ===== */
     .game-title {
       font-size: 3rem;
       font-weight: 800;
@@ -55,7 +45,6 @@
       text-align: center;
     }
 
-    /* ===== CARD ===== */
     .card {
       background: #1e1e2e;
       border: 1px solid #2e2e4e;
@@ -72,18 +61,13 @@
       text-align: center;
     }
 
-    /* ===== FORM ===== */
-    .form-group {
-      margin-bottom: 1.2rem;
-    }
-
+    .form-group { margin-bottom: 1.2rem; }
     .form-group label {
       display: block;
       font-size: 0.85rem;
       color: #94a3b8;
       margin-bottom: 6px;
     }
-
     .form-group input {
       width: 100%;
       padding: 12px 16px;
@@ -95,12 +79,8 @@
       outline: none;
       transition: border 0.2s;
     }
+    .form-group input:focus { border-color: #a78bfa; }
 
-    .form-group input:focus {
-      border-color: #a78bfa;
-    }
-
-    /* ===== BUTTON ===== */
     .btn-primary {
       width: 100%;
       padding: 14px;
@@ -114,17 +94,9 @@
       margin-top: 1rem;
       transition: opacity 0.2s, transform 0.1s;
     }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0px); }
 
-    .btn-primary:hover {
-      opacity: 0.9;
-      transform: translateY(-1px);
-    }
-
-    .btn-primary:active {
-      transform: translateY(0px);
-    }
-
-    /* ===== RANK BADGE ===== */
     .rank-badge {
       margin-top: 2rem;
       padding: 10px 20px;
@@ -134,12 +106,117 @@
       font-size: 0.85rem;
       color: #94a3b8;
     }
+    .rank-badge span { color: #a78bfa; font-weight: 600; }
 
-    .rank-badge span {
-      color: #a78bfa;
-      font-weight: 600;
+    .game-card {
+      background: #1e1e2e;
+      border: 1px solid #2e2e4e;
+      border-radius: 16px;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 700px;
     }
 
+    .game-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .level-info { font-size: 0.85rem; color: #94a3b8; }
+    .level-info span { color: #a78bfa; font-weight: 600; }
+
+    .cipher-area {
+      background: #0a0a1a;
+      border: 1px solid #2e2e4e;
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      min-height: 120px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cipher-word {
+      display: inline-flex;
+      gap: 2px;
+      margin: 4px 8px;
+    }
+
+    .cipher-letter {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #a78bfa;
+    }
+
+    .loading-text {
+      color: #94a3b8;
+      font-size: 0.95rem;
+      text-align: center;
+      width: 100%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .answer-label {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      margin-bottom: 8px;
+    }
+
+    .answer-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: #0a0a1a;
+      border: 1px solid #2e2e4e;
+      border-radius: 8px;
+      color: #ffffff;
+      font-size: 1rem;
+      outline: none;
+      transition: border 0.2s;
+      margin-bottom: 1rem;
+    }
+    .answer-input:focus { border-color: #a78bfa; }
+
+    .feedback {
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 600;
+      min-height: 28px;
+      margin-bottom: 1rem;
+      transition: all 0.3s;
+    }
+    .feedback.correct { color: #4ade80; }
+    .feedback.wrong { color: #f87171; }
+
+    .hint-text {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #475569;
+      margin-top: 1rem;
+    }
+
+    .difficulty-badge {
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: #2e2e4e;
+      color: #a78bfa;
+    }
   </style>
 </head>
 <body>
@@ -148,50 +225,351 @@
   <div class="screen active" id="welcome-screen">
     <h1 class="game-title">🔐 Cipher Decode</h1>
     <p class="game-subtitle">Decode the twisted letters. Train your mind.</p>
-
     <div class="card">
       <h2>Tell us about yourself</h2>
-
       <div class="form-group">
         <label for="player-name">Your Name</label>
         <input type="text" id="player-name" placeholder="e.g. Amirul" />
       </div>
-
       <div class="form-group">
         <label for="player-age">Your Age</label>
-        <input type="number" id="player-age" placeholder="e.g. 18" min="5" max="99" />
+        <input type="number" id="player-age" placeholder="e.g. 19" min="5" max="99" />
       </div>
-
-      <button class="btn-primary" onclick="startGame()">
-        Start Decoding →
-      </button>
+      <button class="btn-primary" onclick="startGame()">Start Decoding →</button>
     </div>
-
     <div class="rank-badge">
       Current Rank: <span>🔰 Rookie Decoder</span>
     </div>
   </div>
 
+  <!-- GAME SCREEN -->
+  <div class="screen" id="game-screen">
+    <h1 class="game-title">🔐 Cipher Decode</h1>
+    <p class="game-subtitle" id="game-subtitle">Good luck, decoder!</p>
+    <div class="game-card">
+      <div class="game-header">
+        <div class="level-info">Level <span id="level-display">1</span> &nbsp;|&nbsp; Solved <span id="solved-display">0</span></div>
+        <div class="difficulty-badge" id="difficulty-badge">🔰 Rookie</div>
+      </div>
+      <div class="cipher-area" id="cipher-area">
+        <span class="loading-text">Generating your cipher...</span>
+      </div>
+      <div class="answer-label">Type the decoded sentence:</div>
+      <input type="text" class="answer-input" id="answer-input"
+        placeholder="Your answer here..." onkeydown="checkEnter(event)" />
+      <div class="feedback" id="feedback"></div>
+      <button class="btn-primary" onclick="checkAnswer()">Submit Answer ✓</button>
+      <div class="hint-text">💡 Tip: Ignore capital letters, but watch for punctuation!</div>
+    </div>
+    <div class="rank-badge" style="margin-top:2rem;">
+      Rank: <span id="rank-display">🔰 Rookie Decoder</span>
+    </div>
+  </div>
+
   <script>
-    // This function runs when the player clicks "Start Decoding"
+
+    // =============================================
+    // GAME STATE
+    // =============================================
+    const state = {
+      playerName: '',
+      playerAge: 0,
+      level: 1,
+      solved: 0,
+      currentSentence: '',
+    };
+
+    // =============================================
+    // SENTENCE HISTORY — at top level so every
+    // function can access it
+    // =============================================
+    const usedSentences = [];
+
+    // =============================================
+    // LOCAL SENTENCE BANK — guaranteed unique pool
+    // used as fallback when AI repeats or fails
+    // =============================================
+    const sentenceBank = [
+      'The quick brown fox jumps over the lazy dog.',
+      'Cats sleep for almost sixteen hours every single day.',
+      'Learning new skills makes your brain stronger always.',
+      'Every morning the birds sing outside my window.',
+      'Pizza was invented in the beautiful city of Naples.',
+      'Elephants are the largest land animals on earth.',
+      'The sun rises in the east and sets in the west.',
+      'Reading books every day improves your vocabulary greatly.',
+      'Mount Everest is the tallest mountain in the world.',
+      'Honey never expires and can last for thousands of years.',
+      'Sharks have existed for longer than trees on earth.',
+      'The moon controls the tides of our oceans.',
+      'Butterflies taste food using sensors on their feet.',
+      'Bananas are technically classified as berries by botanists.',
+      'Lightning strikes the earth about one hundred times per second.',
+      'A group of flamingos is called a flamboyance.',
+      'Octopuses have three hearts and blue colored blood.',
+      'The smell of rain on dry earth is called petrichor.',
+      'Wombats are the only animals that produce cube shaped droppings.',
+      'A single cloud can weigh more than one million pounds.',
+      'Crows can recognize and remember human faces for years.',
+      'The fingerprints of a koala are nearly identical to humans.',
+      'Stars that we see at night may no longer exist.',
+      'Apples belong to the same family as roses do.',
+      'The heart of a blue whale is the size of a car.',
+      'A bolt of lightning is five times hotter than the sun.',
+      'Dolphins sleep with one eye open at all times.',
+      'The inventor of the frisbee was turned into a frisbee.',
+      'Cleopatra lived closer in time to the moon landing than pyramids.',
+      'A day on Venus is longer than a year on Venus.',
+    ];
+
+    // Keep track of which bank sentences have been used
+    let bankIndex = 0;
+
+    // =============================================
+    // RANKS
+    // =============================================
+    const ranks = [
+      { minLevel: 1, emoji: '🔰', title: 'Rookie Decoder' },
+      { minLevel: 3, emoji: '🔍', title: 'Code Breaker' },
+      { minLevel: 5, emoji: '🧠', title: 'Mind Bender' },
+      { minLevel: 7, emoji: '⚡', title: 'Cipher Master' },
+    ];
+
+    // =============================================
+    // TRANSFORMATIONS
+    // =============================================
+    const transforms = [
+      'rotate(45deg)',
+      'rotate(90deg)',
+      'rotate(135deg)',
+      'rotate(180deg)',
+      'rotate(225deg)',
+      'rotate(270deg)',
+      'rotate(315deg)',
+      'rotate(-45deg)',
+      'rotate(-90deg)',
+      'rotate(-135deg)',
+      'scaleX(-1)',
+      'scaleY(-1)',
+      'rotate(90deg) scaleX(-1)',
+      'rotate(180deg) scaleY(-1)',
+    ];
+
+    // =============================================
+    // DIFFICULTY
+    // =============================================
+    function getDifficulty() {
+      if (state.level <= 2) return { label: '🔰 Rookie',  angles: [0,1,3,6],              wordCount: '3 to 4' };
+      if (state.level <= 4) return { label: '🔍 Breaker', angles: [0,1,2,3,4,5,6],        wordCount: '4 to 5' };
+      if (state.level <= 6) return { label: '🧠 Bender',  angles: transforms.slice(0,10), wordCount: '5 to 7' };
+      return                       { label: '⚡ Master',  angles: transforms,              wordCount: '7 to 9' };
+    }
+
+    // =============================================
+    // GET RANK
+    // =============================================
+    function getRank() {
+      for (let i = ranks.length - 1; i >= 0; i--) {
+        if (state.level >= ranks[i].minLevel) {
+          return ranks[i].emoji + ' ' + ranks[i].title;
+        }
+      }
+      return '🔰 Rookie Decoder';
+    }
+
+    // =============================================
+    // CHECK IF SENTENCE IS TOO SIMILAR
+    // This is our own duplicate checker — we don't
+    // rely on the AI to avoid repeats
+    // =============================================
+    function isTooSimilar(newSentence) {
+      const newLower = newSentence.toLowerCase().trim();
+      for (const used of usedSentences) {
+        const usedLower = used.toLowerCase().trim();
+        // Check if first 20 characters match — if so, too similar
+        if (newLower.substring(0, 20) === usedLower.substring(0, 20)) return true;
+        // Check if sentences are exactly the same
+        if (newLower === usedLower) return true;
+      }
+      return false;
+    }
+
+    // =============================================
+    // GET FALLBACK FROM BANK
+    // Picks the next unused sentence from our bank
+    // =============================================
+    function getFallbackSentence() {
+      // Shuffle bank on first use
+      if (bankIndex === 0) {
+        for (let i = sentenceBank.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [sentenceBank[i], sentenceBank[j]] = [sentenceBank[j], sentenceBank[i]];
+        }
+      }
+      const sentence = sentenceBank[bankIndex % sentenceBank.length];
+      bankIndex++;
+      return sentence;
+    }
+
+    // =============================================
+    // SHOW SCREEN
+    // =============================================
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    // =============================================
+    // START GAME
+    // =============================================
     function startGame() {
       const name = document.getElementById('player-name').value.trim();
-      const age = document.getElementById('player-age').value.trim();
+      const age  = document.getElementById('player-age').value.trim();
+      if (!name || !age) { alert('Please enter your name and age!'); return; }
 
-      // Check if both fields are filled
-      if (!name || !age) {
-        alert('Please enter your name and age!');
-        return;
+      state.playerName = name;
+      state.playerAge  = parseInt(age);
+
+      document.getElementById('game-subtitle').textContent = `Welcome, ${name}! Decode the cipher below.`;
+      showScreen('game-screen');
+      loadNewPuzzle();
+    }
+
+    // =============================================
+    // LOAD NEW PUZZLE
+    // =============================================
+    async function loadNewPuzzle() {
+      const diff = getDifficulty();
+
+      document.getElementById('cipher-area').innerHTML = '<span class="loading-text">Generating your cipher...</span>';
+      document.getElementById('answer-input').value = '';
+      document.getElementById('feedback').textContent = '';
+      document.getElementById('difficulty-badge').textContent = diff.label;
+      document.getElementById('rank-display').textContent = getRank();
+      document.getElementById('level-display').textContent = state.level;
+      document.getElementById('solved-display').textContent = state.solved;
+
+      const sentence = await generateSentence(diff.wordCount);
+      state.currentSentence = sentence;
+      displayCipher(sentence, diff);
+    }
+
+    // =============================================
+    // GENERATE SENTENCE
+    // Tries AI up to 3 times, falls back to bank
+    // =============================================
+    async function generateSentence(wordCount) {
+      const historyText = usedSentences.length > 0
+        ? `Previously used sentences (do NOT repeat or use similar): ${usedSentences.slice(-5).join(' | ')}`
+        : '';
+
+      // Try AI up to 3 times
+      for (let attempt = 0; attempt < 3; attempt++) {
+        try {
+          const response = await fetch('https://api.anthropic.com/v1/messages', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              model: 'claude-sonnet-4-20250514',
+              max_tokens: 100,
+              messages: [{
+                role: 'user',
+                content: `Generate ONE simple English sentence of ${wordCount} words.
+                          Player name: ${state.playerName}, age: ${state.playerAge}.
+                          Rules:
+                          - Do NOT start with the player name "${state.playerName}".
+                          - Topic must be from: animals, science, food, travel, sports, nature, history.
+                          - Every attempt must use a completely different topic and structure.
+                          - Return the sentence only. No quotes. No explanation.
+                          ${historyText}
+                          Attempt number: ${attempt + 1} — make this different from all previous attempts.`
+              }]
+            })
+          });
+
+          const data = await response.json();
+          const sentence = data.content[0].text.trim();
+
+          // OUR OWN duplicate check — don't trust AI
+          if (!isTooSimilar(sentence)) {
+            usedSentences.push(sentence);
+            if (usedSentences.length > 15) usedSentences.shift();
+            return sentence;
+          }
+
+          // If too similar, loop and try again
+
+        } catch (err) {
+          // Network error — break and use fallback
+          break;
+        }
       }
 
-      // Save player info (we'll use this later to personalize AI sentences)
-      localStorage.setItem('playerName', name);
-      localStorage.setItem('playerAge', age);
-
-      // For now just confirm it works
-      alert(`Welcome, ${name}! Let the decoding begin! 🔐`);
+      // AI failed or kept repeating — use our local bank
+      const fallback = getFallbackSentence();
+      usedSentences.push(fallback);
+      return fallback;
     }
-  </script>
 
+    // =============================================
+    // DISPLAY CIPHER
+    // =============================================
+    function displayCipher(sentence, diff) {
+      const area = document.getElementById('cipher-area');
+      area.innerHTML = '';
+
+      const words = sentence.split(' ');
+
+      words.forEach(word => {
+        const wordDiv = document.createElement('div');
+        wordDiv.className = 'cipher-word';
+
+        for (let i = 0; i < word.length; i++) {
+          const span = document.createElement('span');
+          span.className = 'cipher-letter';
+
+          const availableTransforms = diff.angles;
+          const randomIndex = Math.floor(Math.random() * availableTransforms.length);
+          const transform = typeof availableTransforms[randomIndex] === 'string'
+            ? availableTransforms[randomIndex]
+            : transforms[availableTransforms[randomIndex]];
+
+          span.style.transform = transform;
+          span.textContent = word[i];
+          wordDiv.appendChild(span);
+        }
+
+        area.appendChild(wordDiv);
+      });
+    }
+
+    // =============================================
+    // CHECK ANSWER
+    // =============================================
+    function checkAnswer() {
+      const input = document.getElementById('answer-input').value;
+      const feedback = document.getElementById('feedback');
+
+      const normalize = str => str.toLowerCase().trim();
+      const playerAnswer  = normalize(input);
+      const correctAnswer = normalize(state.currentSentence);
+
+      if (playerAnswer === correctAnswer) {
+        feedback.textContent = '✅ Correct! Well decoded!';
+        feedback.className = 'feedback correct';
+        state.solved++;
+        state.level++;
+        setTimeout(() => loadNewPuzzle(), 1500);
+      } else {
+        feedback.textContent = '❌ Not quite! Look carefully at each letter.';
+        feedback.className = 'feedback wrong';
+      }
+    }
+
+    function checkEnter(event) {
+      if (event.key === 'Enter') checkAnswer();
+    }
+
+  </script>
 </body>
 </html>
