@@ -31,11 +31,12 @@
     .game-title {
       font-size: 3rem;
       font-weight: 800;
-      background: linear-gradient(135deg, #a78bfa, #60a5fa);
+      background: linear-gradient(135deg, var(--accent1, #a78bfa), var(--accent2, #60a5fa));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 0.5rem;
       text-align: center;
+      transition: all 0.5s;
     }
 
     .game-subtitle {
@@ -85,7 +86,7 @@
     .btn-primary {
       width: 100%;
       padding: 14px;
-      background: linear-gradient(135deg, #a78bfa, #60a5fa);
+      background: linear-gradient(135deg, var(--accent1, #a78bfa), var(--accent2, #60a5fa));
       border: none;
       border-radius: 8px;
       color: white;
@@ -97,18 +98,9 @@
     }
     .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
     .btn-primary:active { transform: translateY(0px); }
-    .btn-primary:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-      transform: none;
-    }
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
-    /* ===== SECONDARY BUTTON ROW ===== */
-    .btn-row {
-      display: flex;
-      gap: 10px;
-      margin-top: 10px;
-    }
+    .btn-row { display: flex; gap: 10px; margin-top: 10px; }
 
     .btn-secondary {
       flex: 1;
@@ -122,14 +114,8 @@
       cursor: pointer;
       transition: all 0.2s;
     }
-    .btn-secondary:hover {
-      border-color: #a78bfa;
-      color: #a78bfa;
-    }
-    .btn-secondary:disabled {
-      opacity: 0.3;
-      cursor: not-allowed;
-    }
+    .btn-secondary:hover { border-color: #a78bfa; color: #a78bfa; }
+    .btn-secondary:disabled { opacity: 0.3; cursor: not-allowed; }
 
     /* ===== RANK BADGE ===== */
     .rank-badge {
@@ -163,12 +149,33 @@
     .level-info { font-size: 0.85rem; color: #94a3b8; }
     .level-info span { color: #a78bfa; font-weight: 600; }
 
-    /* ===== ATTEMPT DOTS ===== */
-    .attempt-dots {
+    /* ===== STATS ROW ===== */
+    .stats-row {
       display: flex;
-      gap: 6px;
-      align-items: center;
+      gap: 10px;
+      margin-bottom: 1.5rem;
     }
+    .stat-box {
+      flex: 1;
+      background: #0a0a1a;
+      border: 1px solid #2e2e4e;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+    }
+    .stat-box .stat-value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--accent1, #a78bfa);
+    }
+    .stat-box .stat-label {
+      font-size: 0.7rem;
+      color: #475569;
+      margin-top: 2px;
+    }
+
+    /* ===== ATTEMPT DOTS ===== */
+    .attempt-dots { display: flex; gap: 6px; align-items: center; }
     .dot {
       width: 10px;
       height: 10px;
@@ -202,11 +209,7 @@
       animation: glowCorrect 0.6s ease;
     }
 
-    .cipher-word {
-      display: inline-flex;
-      gap: 2px;
-      margin: 4px 8px;
-    }
+    .cipher-word { display: inline-flex; gap: 2px; margin: 4px 8px; }
 
     .cipher-letter {
       display: inline-flex;
@@ -216,15 +219,10 @@
       height: 36px;
       font-size: 1.3rem;
       font-weight: 600;
-      color: #a78bfa;
+      color: var(--accent1, #a78bfa);
       transition: color 0.3s;
     }
-
-    /* Hint revealed letter */
-    .cipher-letter.hinted {
-      color: #fbbf24;
-      transform: none !important;
-    }
+    .cipher-letter.hinted { color: #fbbf24; transform: none !important; }
 
     /* ===== LOADING ===== */
     .loading-text {
@@ -235,32 +233,35 @@
       animation: pulse 1.5s infinite;
     }
 
+    /* ===== ANIMATIONS ===== */
     @keyframes pulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.4; }
     }
-
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
-      20%       { transform: translateX(-8px); }
-      40%       { transform: translateX(8px); }
-      60%       { transform: translateX(-5px); }
-      80%       { transform: translateX(5px); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
     }
-
     @keyframes glowCorrect {
       0%   { box-shadow: 0 0 0px #4ade80; }
       50%  { box-shadow: 0 0 18px #4ade80; }
       100% { box-shadow: 0 0 0px #4ade80; }
     }
-
-    /* ===== ANSWER AREA ===== */
-    .answer-label {
-      font-size: 0.85rem;
-      color: #94a3b8;
-      margin-bottom: 8px;
+    @keyframes popIn {
+      0%   { transform: scale(0.5); opacity: 0; }
+      70%  { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
+    /* ===== ANSWER AREA ===== */
+    .answer-label { font-size: 0.85rem; color: #94a3b8; margin-bottom: 8px; }
     .answer-input {
       width: 100%;
       padding: 12px 16px;
@@ -302,7 +303,6 @@
     }
     .hint-box.visible { display: block; }
 
-    /* ===== BOTTOM HINT TEXT ===== */
     .hint-text {
       text-align: center;
       font-size: 0.8rem;
@@ -316,7 +316,87 @@
       font-size: 0.75rem;
       font-weight: 600;
       background: #2e2e4e;
-      color: #a78bfa;
+      color: var(--accent1, #a78bfa);
+    }
+
+    /* ===== STREAK BADGE ===== */
+    .streak-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: #2e2e4e;
+      color: #fbbf24;
+      margin-top: 8px;
+    }
+
+    /* ===== LEVEL UP OVERLAY ===== */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+    .overlay.active { display: flex; }
+
+    .levelup-card {
+      background: #1e1e2e;
+      border: 2px solid var(--accent1, #a78bfa);
+      border-radius: 24px;
+      padding: 3rem 2.5rem;
+      text-align: center;
+      max-width: 380px;
+      width: 90%;
+      animation: popIn 0.5s ease forwards;
+    }
+
+    .levelup-emoji {
+      font-size: 5rem;
+      display: block;
+      margin-bottom: 1rem;
+      animation: popIn 0.6s ease 0.1s both;
+    }
+
+    .levelup-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent1, #a78bfa), var(--accent2, #60a5fa));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .levelup-subtitle {
+      color: #94a3b8;
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+    }
+
+    .levelup-stats {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 2rem;
+    }
+    .levelup-stat {
+      flex: 1;
+      background: #0a0a1a;
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+    }
+    .levelup-stat .val {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent1, #a78bfa);
+    }
+    .levelup-stat .lbl {
+      font-size: 0.7rem;
+      color: #475569;
+      margin-top: 2px;
     }
   </style>
 </head>
@@ -350,7 +430,6 @@
 
     <div class="game-card">
 
-      <!-- Header: level info + attempt dots -->
       <div class="game-header">
         <div class="level-info">
           Level <span id="level-display">1</span>
@@ -366,28 +445,38 @@
         <div class="difficulty-badge" id="difficulty-badge">🔰 Rookie</div>
       </div>
 
-      <!-- Cipher display -->
+      <!-- Stats row -->
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-value" id="stat-accuracy">--%</div>
+          <div class="stat-label">Accuracy</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="stat-streak">0🔥</div>
+          <div class="stat-label">Streak</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="stat-best">0</div>
+          <div class="stat-label">Best Streak</div>
+        </div>
+      </div>
+
       <div class="cipher-area" id="cipher-area">
         <span class="loading-text">Generating your cipher...</span>
       </div>
 
-      <!-- Hint box (hidden until hint used) -->
       <div class="hint-box" id="hint-box">💡 Hint: </div>
 
-      <!-- Answer input -->
       <div class="answer-label">Type the decoded sentence:</div>
       <input type="text" class="answer-input" id="answer-input"
         placeholder="Your answer here..." onkeydown="checkEnter(event)" />
 
-      <!-- Feedback -->
       <div class="feedback" id="feedback"></div>
 
-      <!-- Submit button -->
       <button class="btn-primary" id="submit-btn" onclick="checkAnswer()">
         Submit Answer ✓
       </button>
 
-      <!-- Hint + Skip buttons -->
       <div class="btn-row">
         <button class="btn-secondary" id="hint-btn" onclick="useHint()">
           💡 Hint (reveals a word)
@@ -405,7 +494,91 @@
     </div>
   </div>
 
+  <!-- LEVEL UP OVERLAY -->
+  <div class="overlay" id="levelup-overlay">
+    <div class="levelup-card">
+      <span class="levelup-emoji" id="levelup-emoji">⚡</span>
+      <div class="levelup-title" id="levelup-title">Rank Up!</div>
+      <div class="levelup-subtitle" id="levelup-subtitle">You've reached a new rank!</div>
+      <div class="levelup-stats">
+        <div class="levelup-stat">
+          <div class="val" id="lu-solved">0</div>
+          <div class="lbl">Solved</div>
+        </div>
+        <div class="levelup-stat">
+          <div class="val" id="lu-accuracy">0%</div>
+          <div class="lbl">Accuracy</div>
+        </div>
+        <div class="levelup-stat">
+          <div class="val" id="lu-streak">0</div>
+          <div class="lbl">Best Streak</div>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="closeLevelUp()">
+        Keep Decoding! →
+      </button>
+    </div>
+  </div>
+
   <script>
+
+    // =============================================
+    // THEME COLORS per difficulty
+    // =============================================
+    const themes = {
+      rookie:  { accent1: '#a78bfa', accent2: '#60a5fa' },
+      breaker: { accent1: '#34d399', accent2: '#06b6d4' },
+      bender:  { accent1: '#f97316', accent2: '#eab308' },
+      master:  { accent1: '#f43f5e', accent2: '#ec4899' },
+    };
+
+    function applyTheme(key) {
+      const t = themes[key];
+      document.documentElement.style.setProperty('--accent1', t.accent1);
+      document.documentElement.style.setProperty('--accent2', t.accent2);
+    }
+
+    // =============================================
+    // WEB AUDIO — generate sounds without files
+    // =============================================
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+    function playSound(type) {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      if (type === 'correct') {
+        osc.frequency.setValueAtTime(520, audioCtx.currentTime);
+        osc.frequency.setValueAtTime(660, audioCtx.currentTime + 0.1);
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.4);
+      } else if (type === 'wrong') {
+        osc.frequency.setValueAtTime(220, audioCtx.currentTime);
+        osc.frequency.setValueAtTime(180, audioCtx.currentTime + 0.1);
+        gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.3);
+      } else if (type === 'levelup') {
+        // Plays a little ascending melody
+        const notes = [392, 523, 659, 784];
+        notes.forEach((freq, i) => {
+          const o = audioCtx.createOscillator();
+          const g = audioCtx.createGain();
+          o.connect(g);
+          g.connect(audioCtx.destination);
+          o.frequency.value = freq;
+          g.gain.setValueAtTime(0.2, audioCtx.currentTime + i * 0.12);
+          g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + i * 0.12 + 0.3);
+          o.start(audioCtx.currentTime + i * 0.12);
+          o.stop(audioCtx.currentTime + i * 0.12 + 0.3);
+        });
+      }
+    }
 
     // =============================================
     // GAME STATE
@@ -415,10 +588,15 @@
       playerAge: 0,
       level: 1,
       solved: 0,
+      totalAttempts: 0,
+      totalCorrect: 0,
+      streak: 0,
+      bestStreak: 0,
       currentSentence: '',
-      wrongAttempts: 0,    // counts wrong answers this puzzle
-      hintUsed: false,     // has hint been used this puzzle
-      hintedWords: [],     // which word indices have been revealed
+      wrongAttempts: 0,
+      hintUsed: false,
+      hintedWords: [],
+      currentRank: 'Rookie Decoder',
     };
 
     const usedSentences = [];
@@ -464,52 +642,79 @@
     // RANKS
     // =============================================
     const ranks = [
-      { minLevel: 1, emoji: '🔰', title: 'Rookie Decoder' },
-      { minLevel: 3, emoji: '🔍', title: 'Code Breaker' },
-      { minLevel: 5, emoji: '🧠', title: 'Mind Bender' },
-      { minLevel: 7, emoji: '⚡', title: 'Cipher Master' },
+      { minLevel: 1, emoji: '🔰', title: 'Rookie Decoder',  theme: 'rookie'  },
+      { minLevel: 3, emoji: '🔍', title: 'Code Breaker',    theme: 'breaker' },
+      { minLevel: 5, emoji: '🧠', title: 'Mind Bender',     theme: 'bender'  },
+      { minLevel: 7, emoji: '⚡', title: 'Cipher Master',   theme: 'master'  },
     ];
 
     // =============================================
     // TRANSFORMATIONS
     // =============================================
     const transforms = [
-      'rotate(45deg)',
-      'rotate(90deg)',
-      'rotate(135deg)',
-      'rotate(180deg)',
-      'rotate(225deg)',
-      'rotate(270deg)',
-      'rotate(315deg)',
-      'rotate(-45deg)',
-      'rotate(-90deg)',
-      'rotate(-135deg)',
-      'scaleX(-1)',
-      'scaleY(-1)',
-      'rotate(90deg) scaleX(-1)',
-      'rotate(180deg) scaleY(-1)',
+      'rotate(45deg)',  'rotate(90deg)',   'rotate(135deg)',
+      'rotate(180deg)', 'rotate(225deg)',  'rotate(270deg)',
+      'rotate(315deg)', 'rotate(-45deg)', 'rotate(-90deg)',
+      'rotate(-135deg)','scaleX(-1)',      'scaleY(-1)',
+      'rotate(90deg) scaleX(-1)', 'rotate(180deg) scaleY(-1)',
     ];
 
     // =============================================
     // DIFFICULTY
     // =============================================
     function getDifficulty() {
-      if (state.level <= 2) return { label: '🔰 Rookie',  angles: [0,1,3,6],              wordCount: '3 to 4' };
-      if (state.level <= 4) return { label: '🔍 Breaker', angles: [0,1,2,3,4,5,6],        wordCount: '4 to 5' };
-      if (state.level <= 6) return { label: '🧠 Bender',  angles: transforms.slice(0,10), wordCount: '5 to 7' };
-      return                       { label: '⚡ Master',  angles: transforms,              wordCount: '7 to 9' };
+      if (state.level <= 2) return { label: '🔰 Rookie',  angles: [0,1,3,6],              wordCount: '3 to 4', theme: 'rookie'  };
+      if (state.level <= 4) return { label: '🔍 Breaker', angles: [0,1,2,3,4,5,6],        wordCount: '4 to 5', theme: 'breaker' };
+      if (state.level <= 6) return { label: '🧠 Bender',  angles: transforms.slice(0,10), wordCount: '5 to 7', theme: 'bender'  };
+      return                       { label: '⚡ Master',  angles: transforms,              wordCount: '7 to 9', theme: 'master'  };
     }
 
     // =============================================
     // GET RANK
     // =============================================
-    function getRank() {
+    function getRankInfo() {
       for (let i = ranks.length - 1; i >= 0; i--) {
-        if (state.level >= ranks[i].minLevel) {
-          return ranks[i].emoji + ' ' + ranks[i].title;
-        }
+        if (state.level >= ranks[i].minLevel) return ranks[i];
       }
-      return '🔰 Rookie Decoder';
+      return ranks[0];
+    }
+
+    // =============================================
+    // UPDATE STATS DISPLAY
+    // =============================================
+    function updateStats() {
+      const accuracy = state.totalAttempts === 0
+        ? '--'
+        : Math.round((state.totalCorrect / state.totalAttempts) * 100) + '%';
+
+      document.getElementById('stat-accuracy').textContent = accuracy;
+      document.getElementById('stat-streak').textContent   = state.streak + '🔥';
+      document.getElementById('stat-best').textContent     = state.bestStreak;
+    }
+
+    // =============================================
+    // SHOW LEVEL UP OVERLAY
+    // =============================================
+    function showLevelUp(rankInfo) {
+      playSound('levelup');
+
+      const accuracy = state.totalAttempts === 0
+        ? '0%'
+        : Math.round((state.totalCorrect / state.totalAttempts) * 100) + '%';
+
+      document.getElementById('levelup-emoji').textContent    = rankInfo.emoji;
+      document.getElementById('levelup-title').textContent    = 'Rank Up! ' + rankInfo.emoji;
+      document.getElementById('levelup-subtitle').textContent = `You are now a ${rankInfo.title}!`;
+      document.getElementById('lu-solved').textContent        = state.solved;
+      document.getElementById('lu-accuracy').textContent      = accuracy;
+      document.getElementById('lu-streak').textContent        = state.bestStreak;
+
+      document.getElementById('levelup-overlay').classList.add('active');
+    }
+
+    function closeLevelUp() {
+      document.getElementById('levelup-overlay').classList.remove('active');
+      loadNewPuzzle();
     }
 
     // =============================================
@@ -550,29 +755,23 @@
 
     // =============================================
     // RESET PUZZLE STATE
-    // Called at start of every new puzzle
     // =============================================
     function resetPuzzleState() {
       state.wrongAttempts = 0;
-      state.hintUsed = false;
-      state.hintedWords = [];
+      state.hintUsed      = false;
+      state.hintedWords   = [];
 
-      // Reset attempt dots to grey
       document.getElementById('dot-1').className = 'dot';
       document.getElementById('dot-2').className = 'dot';
       document.getElementById('dot-3').className = 'dot';
 
-      // Re-enable all buttons
-      document.getElementById('submit-btn').disabled = false;
-      document.getElementById('hint-btn').disabled = false;
-      document.getElementById('skip-btn').disabled = false;
-      document.getElementById('answer-input').disabled = false;
+      document.getElementById('submit-btn').disabled    = false;
+      document.getElementById('hint-btn').disabled      = false;
+      document.getElementById('skip-btn').disabled      = false;
+      document.getElementById('answer-input').disabled  = false;
 
-      // Hide hint box
-      document.getElementById('hint-box').className = 'hint-box';
-      document.getElementById('hint-box').textContent = '💡 Hint: ';
-
-      // Clear cipher area border
+      document.getElementById('hint-box').className    = 'hint-box';
+      document.getElementById('hint-box').textContent  = '💡 Hint: ';
       document.getElementById('cipher-area').className = 'cipher-area';
     }
 
@@ -599,13 +798,20 @@
       const diff = getDifficulty();
       resetPuzzleState();
 
+      // Apply theme color for this difficulty
+      applyTheme(diff.theme);
+
       document.getElementById('cipher-area').innerHTML = '<span class="loading-text">Generating your cipher...</span>';
-      document.getElementById('answer-input').value = '';
-      document.getElementById('feedback').textContent = '';
+      document.getElementById('answer-input').value    = '';
+      document.getElementById('feedback').textContent  = '';
       document.getElementById('difficulty-badge').textContent = diff.label;
-      document.getElementById('rank-display').textContent = getRank();
-      document.getElementById('level-display').textContent = state.level;
-      document.getElementById('solved-display').textContent = state.solved;
+      document.getElementById('level-display').textContent    = state.level;
+      document.getElementById('solved-display').textContent   = state.solved;
+
+      const rankInfo = getRankInfo();
+      document.getElementById('rank-display').textContent = rankInfo.emoji + ' ' + rankInfo.title;
+
+      updateStats();
 
       const sentence = await generateSentence(diff.wordCount);
       state.currentSentence = sentence;
@@ -664,9 +870,7 @@
       const area = document.getElementById('cipher-area');
       area.innerHTML = '';
 
-      const words = sentence.split(' ');
-
-      words.forEach((word, wordIndex) => {
+      sentence.split(' ').forEach((word, wordIndex) => {
         const wordDiv = document.createElement('div');
         wordDiv.className = 'cipher-word';
         wordDiv.dataset.wordIndex = wordIndex;
@@ -692,58 +896,50 @@
     }
 
     // =============================================
-    // USE HINT — reveals one random word
+    // USE HINT
     // =============================================
     function useHint() {
       if (state.hintUsed) return;
 
       const words = state.currentSentence.split(' ');
-
-      // Find word indices not yet hinted
-      const available = words
-        .map((w, i) => i)
-        .filter(i => !state.hintedWords.includes(i));
-
+      const available = words.map((w, i) => i).filter(i => !state.hintedWords.includes(i));
       if (available.length === 0) return;
 
-      // Pick a random word to reveal
       const wordIndex = available[Math.floor(Math.random() * available.length)];
       state.hintedWords.push(wordIndex);
       state.hintUsed = true;
 
-      // Show the word in the hint box
-      const revealedWord = words[wordIndex];
       const hintBox = document.getElementById('hint-box');
-      hintBox.textContent = `💡 Hint: Word ${wordIndex + 1} is "${revealedWord}"`;
+      hintBox.textContent = `💡 Hint: Word ${wordIndex + 1} is "${words[wordIndex]}"`;
       hintBox.className = 'hint-box visible';
 
-      // Highlight that word in cipher area — show it straight
       const wordDivs = document.querySelectorAll('.cipher-word');
       if (wordDivs[wordIndex]) {
-        const letters = wordDivs[wordIndex].querySelectorAll('.cipher-letter');
-        letters.forEach(letter => {
-          letter.classList.add('hinted');
+        wordDivs[wordIndex].querySelectorAll('.cipher-letter').forEach(l => {
+          l.classList.add('hinted');
         });
       }
 
-      // Disable hint button after use
       document.getElementById('hint-btn').disabled = true;
     }
 
     // =============================================
-    // SKIP PUZZLE — move to next without solving
+    // SKIP PUZZLE
     // =============================================
     function skipPuzzle() {
+      state.streak = 0;
+      updateStats();
+
       const feedback = document.getElementById('feedback');
       feedback.textContent = `⏭ Skipped! The answer was: "${state.currentSentence}"`;
       feedback.className = 'feedback reveal';
 
-      // Disable everything
-      document.getElementById('submit-btn').disabled = true;
-      document.getElementById('hint-btn').disabled = true;
-      document.getElementById('skip-btn').disabled = true;
+      playSound('wrong');
 
-      // Load next puzzle after 2.5 seconds
+      document.getElementById('submit-btn').disabled = true;
+      document.getElementById('hint-btn').disabled   = true;
+      document.getElementById('skip-btn').disabled   = true;
+
       setTimeout(() => loadNewPuzzle(), 2500);
     }
 
@@ -759,50 +955,66 @@
       const playerAnswer  = normalize(input);
       const correctAnswer = normalize(state.currentSentence);
 
+      state.totalAttempts++;
+
       if (playerAnswer === correctAnswer) {
         // ✅ CORRECT
-        feedback.textContent = '✅ Correct! Well decoded!';
-        feedback.className = 'feedback correct';
-
-        // Green glow on cipher area
-        area.classList.add('glow-correct');
-
+        state.totalCorrect++;
         state.solved++;
         state.level++;
-        setTimeout(() => loadNewPuzzle(), 1500);
+        state.streak++;
+        if (state.streak > state.bestStreak) state.bestStreak = state.streak;
+
+        playSound('correct');
+
+        feedback.textContent = '✅ Correct! Well decoded!';
+        feedback.className   = 'feedback correct';
+        area.classList.add('glow-correct');
+
+        updateStats();
+
+        // Check if rank changed
+        const newRankInfo = getRankInfo();
+        if (newRankInfo.title !== state.currentRank) {
+          state.currentRank = newRankInfo.title;
+          applyTheme(newRankInfo.theme);
+          setTimeout(() => showLevelUp(newRankInfo), 800);
+        } else {
+          setTimeout(() => loadNewPuzzle(), 1500);
+        }
 
       } else {
         // ❌ WRONG
         state.wrongAttempts++;
+        state.streak = 0;
 
-        // Shake animation
+        playSound('wrong');
+
         area.classList.remove('shake');
-        void area.offsetWidth; // forces browser to restart animation
+        void area.offsetWidth;
         area.classList.add('shake');
 
-        // Update attempt dot
         const dot = document.getElementById(`dot-${state.wrongAttempts}`);
         if (dot) dot.className = 'dot wrong';
 
-        if (state.wrongAttempts >= 3) {
-          // Show answer after 3 wrong attempts
-          feedback.textContent = `❌ The answer was: "${state.currentSentence}"`;
-          feedback.className = 'feedback reveal';
+        updateStats();
 
-          document.getElementById('submit-btn').disabled = true;
-          document.getElementById('hint-btn').disabled = true;
+        if (state.wrongAttempts >= 3) {
+          feedback.textContent = `❌ The answer was: "${state.currentSentence}"`;
+          feedback.className   = 'feedback reveal';
+
+          document.getElementById('submit-btn').disabled   = true;
+          document.getElementById('hint-btn').disabled     = true;
           document.getElementById('answer-input').disabled = true;
 
-          // Auto load next puzzle after 3 seconds
           setTimeout(() => loadNewPuzzle(), 3000);
         } else {
           feedback.textContent = `❌ Not quite! ${3 - state.wrongAttempts} attempt(s) remaining.`;
-          feedback.className = 'feedback wrong';
+          feedback.className   = 'feedback wrong';
         }
       }
     }
 
-    // Enter key submits
     function checkEnter(event) {
       if (event.key === 'Enter') checkAnswer();
     }
