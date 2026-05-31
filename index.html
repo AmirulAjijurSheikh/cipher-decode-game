@@ -46,7 +46,7 @@
       text-align: center;
     }
 
-    /* ===== WELCOME CARD ===== */
+    /* ===== CARDS ===== */
     .card {
       background: #1e1e2e;
       border: 1px solid #2e2e4e;
@@ -62,6 +62,48 @@
       text-align: center;
     }
 
+    .game-card {
+      background: #1e1e2e;
+      border: 1px solid #2e2e4e;
+      border-radius: 16px;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 700px;
+    }
+
+    /* ===== RETURNING PLAYER BANNER ===== */
+    .returning-banner {
+      background: #12122a;
+      border: 1px solid var(--accent1, #a78bfa);
+      border-radius: 12px;
+      padding: 1rem 1.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      animation: fadeIn 0.5s ease;
+    }
+    .returning-banner .welcome-back {
+      font-size: 0.9rem;
+      color: #94a3b8;
+    }
+    .returning-banner .player-stats {
+      font-size: 0.85rem;
+      color: var(--accent1, #a78bfa);
+      font-weight: 600;
+    }
+    .returning-banner .clear-btn {
+      background: none;
+      border: none;
+      color: #475569;
+      font-size: 0.75rem;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+    .returning-banner .clear-btn:hover { color: #f87171; }
+
+    /* ===== FORM ===== */
     .form-group { margin-bottom: 1.2rem; }
     .form-group label {
       display: block;
@@ -129,21 +171,14 @@
     }
     .rank-badge span { color: #a78bfa; font-weight: 600; }
 
-    /* ===== GAME CARD ===== */
-    .game-card {
-      background: #1e1e2e;
-      border: 1px solid #2e2e4e;
-      border-radius: 16px;
-      padding: 2.5rem;
-      width: 100%;
-      max-width: 700px;
-    }
-
+    /* ===== GAME HEADER ===== */
     .game-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+      gap: 8px;
     }
 
     .level-info { font-size: 0.85rem; color: #94a3b8; }
@@ -172,6 +207,30 @@
       font-size: 0.7rem;
       color: #475569;
       margin-top: 2px;
+    }
+
+    /* ===== PROGRESS BAR ===== */
+    .progress-wrap {
+      margin-bottom: 1.5rem;
+    }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: #475569;
+      margin-bottom: 6px;
+    }
+    .progress-bar {
+      height: 6px;
+      background: #2e2e4e;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent1, #a78bfa), var(--accent2, #60a5fa));
+      border-radius: 999px;
+      transition: width 0.5s ease;
     }
 
     /* ===== ATTEMPT DOTS ===== */
@@ -256,7 +315,7 @@
       100% { transform: scale(1); opacity: 1; }
     }
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(10px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
@@ -319,19 +378,7 @@
       color: var(--accent1, #a78bfa);
     }
 
-    /* ===== STREAK BADGE ===== */
-    .streak-badge {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      background: #2e2e4e;
-      color: #fbbf24;
-      margin-top: 8px;
-    }
-
-    /* ===== LEVEL UP OVERLAY ===== */
+    /* ===== OVERLAY ===== */
     .overlay {
       display: none;
       position: fixed;
@@ -340,28 +387,28 @@
       z-index: 100;
       align-items: center;
       justify-content: center;
+      padding: 1rem;
     }
     .overlay.active { display: flex; }
 
-    .levelup-card {
+    .overlay-card {
       background: #1e1e2e;
       border: 2px solid var(--accent1, #a78bfa);
       border-radius: 24px;
       padding: 3rem 2.5rem;
       text-align: center;
-      max-width: 380px;
-      width: 90%;
+      max-width: 420px;
+      width: 100%;
       animation: popIn 0.5s ease forwards;
     }
 
-    .levelup-emoji {
-      font-size: 5rem;
+    .overlay-emoji {
+      font-size: 4rem;
       display: block;
       margin-bottom: 1rem;
-      animation: popIn 0.6s ease 0.1s both;
     }
 
-    .levelup-title {
+    .overlay-title {
       font-size: 1.8rem;
       font-weight: 800;
       background: linear-gradient(135deg, var(--accent1, #a78bfa), var(--accent2, #60a5fa));
@@ -370,33 +417,61 @@
       margin-bottom: 0.5rem;
     }
 
-    .levelup-subtitle {
+    .overlay-subtitle {
       color: #94a3b8;
       font-size: 0.95rem;
       margin-bottom: 2rem;
     }
 
-    .levelup-stats {
+    .overlay-stats {
       display: flex;
       gap: 12px;
       margin-bottom: 2rem;
+      flex-wrap: wrap;
     }
-    .levelup-stat {
+    .overlay-stat {
       flex: 1;
+      min-width: 70px;
       background: #0a0a1a;
       border-radius: 10px;
-      padding: 12px;
+      padding: 12px 8px;
       text-align: center;
     }
-    .levelup-stat .val {
-      font-size: 1.5rem;
+    .overlay-stat .val {
+      font-size: 1.4rem;
       font-weight: 700;
       color: var(--accent1, #a78bfa);
     }
-    .levelup-stat .lbl {
-      font-size: 0.7rem;
+    .overlay-stat .lbl {
+      font-size: 0.65rem;
       color: #475569;
       margin-top: 2px;
+    }
+
+    /* ===== SHARE BOX ===== */
+    .share-box {
+      background: #0a0a1a;
+      border: 1px solid #2e2e4e;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 0.8rem;
+      color: #94a3b8;
+      margin-bottom: 1rem;
+      text-align: left;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    /* ===== MOBILE RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      .game-title { font-size: 2rem; }
+      .game-card  { padding: 1.5rem; }
+      .card       { padding: 1.5rem; }
+      .cipher-letter { width: 28px; height: 28px; font-size: 1rem; }
+      .stats-row  { gap: 6px; }
+      .stat-box .stat-value { font-size: 1.1rem; }
+      .game-header { flex-direction: column; align-items: flex-start; }
+      .overlay-card { padding: 2rem 1.5rem; }
     }
   </style>
 </head>
@@ -406,8 +481,19 @@
   <div class="screen active" id="welcome-screen">
     <h1 class="game-title">🔐 Cipher Decode</h1>
     <p class="game-subtitle">Decode the twisted letters. Train your mind.</p>
+
     <div class="card">
-      <h2>Tell us about yourself</h2>
+      <h2>Welcome!</h2>
+
+      <!-- Returning player banner (hidden by default) -->
+      <div class="returning-banner" id="returning-banner" style="display:none;">
+        <div>
+          <div class="welcome-back" id="returning-welcome">Welcome back!</div>
+          <div class="player-stats" id="returning-stats"></div>
+        </div>
+        <button class="clear-btn" onclick="clearSavedData()">Reset</button>
+      </div>
+
       <div class="form-group">
         <label for="player-name">Your Name</label>
         <input type="text" id="player-name" placeholder="e.g. Amirul" />
@@ -418,8 +504,9 @@
       </div>
       <button class="btn-primary" onclick="startGame()">Start Decoding →</button>
     </div>
+
     <div class="rank-badge">
-      Current Rank: <span>🔰 Rookie Decoder</span>
+      Current Rank: <span id="welcome-rank">🔰 Rookie Decoder</span>
     </div>
   </div>
 
@@ -429,7 +516,6 @@
     <p class="game-subtitle" id="game-subtitle">Good luck, decoder!</p>
 
     <div class="game-card">
-
       <div class="game-header">
         <div class="level-info">
           Level <span id="level-display">1</span>
@@ -445,7 +531,18 @@
         <div class="difficulty-badge" id="difficulty-badge">🔰 Rookie</div>
       </div>
 
-      <!-- Stats row -->
+      <!-- Session progress bar -->
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span>Session progress</span>
+          <span id="progress-text">0 / 10</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+        </div>
+      </div>
+
+      <!-- Stats -->
       <div class="stats-row">
         <div class="stat-box">
           <div class="stat-value" id="stat-accuracy">--%</div>
@@ -496,26 +593,61 @@
 
   <!-- LEVEL UP OVERLAY -->
   <div class="overlay" id="levelup-overlay">
-    <div class="levelup-card">
-      <span class="levelup-emoji" id="levelup-emoji">⚡</span>
-      <div class="levelup-title" id="levelup-title">Rank Up!</div>
-      <div class="levelup-subtitle" id="levelup-subtitle">You've reached a new rank!</div>
-      <div class="levelup-stats">
-        <div class="levelup-stat">
+    <div class="overlay-card">
+      <span class="overlay-emoji" id="levelup-emoji">⚡</span>
+      <div class="overlay-title" id="levelup-title">Rank Up!</div>
+      <div class="overlay-subtitle" id="levelup-subtitle">You reached a new rank!</div>
+      <div class="overlay-stats">
+        <div class="overlay-stat">
           <div class="val" id="lu-solved">0</div>
           <div class="lbl">Solved</div>
         </div>
-        <div class="levelup-stat">
+        <div class="overlay-stat">
           <div class="val" id="lu-accuracy">0%</div>
           <div class="lbl">Accuracy</div>
         </div>
-        <div class="levelup-stat">
+        <div class="overlay-stat">
           <div class="val" id="lu-streak">0</div>
           <div class="lbl">Best Streak</div>
         </div>
       </div>
-      <button class="btn-primary" onclick="closeLevelUp()">
-        Keep Decoding! →
+      <button class="btn-primary" onclick="closeLevelUp()">Keep Decoding! →</button>
+    </div>
+  </div>
+
+  <!-- GAME OVER OVERLAY -->
+  <div class="overlay" id="gameover-overlay">
+    <div class="overlay-card">
+      <span class="overlay-emoji">🏆</span>
+      <div class="overlay-title">Session Complete!</div>
+      <div class="overlay-subtitle" id="gameover-subtitle">You finished 10 puzzles!</div>
+      <div class="overlay-stats">
+        <div class="overlay-stat">
+          <div class="val" id="go-solved">0</div>
+          <div class="lbl">Solved</div>
+        </div>
+        <div class="overlay-stat">
+          <div class="val" id="go-accuracy">0%</div>
+          <div class="lbl">Accuracy</div>
+        </div>
+        <div class="overlay-stat">
+          <div class="val" id="go-streak">0</div>
+          <div class="lbl">Best Streak</div>
+        </div>
+        <div class="overlay-stat">
+          <div class="val" id="go-rank">🔰</div>
+          <div class="lbl">Rank</div>
+        </div>
+      </div>
+
+      <!-- Share text box -->
+      <div class="share-box" id="share-box"></div>
+
+      <button class="btn-primary" onclick="copyScore()" id="copy-btn">
+        📋 Copy Score
+      </button>
+      <button class="btn-primary" style="margin-top:8px;" onclick="playAgain()">
+        🔄 Play Again
       </button>
     </div>
   </div>
@@ -523,7 +655,7 @@
   <script>
 
     // =============================================
-    // THEME COLORS per difficulty
+    // THEMES
     // =============================================
     const themes = {
       rookie:  { accent1: '#a78bfa', accent2: '#60a5fa' },
@@ -533,18 +665,18 @@
     };
 
     function applyTheme(key) {
-      const t = themes[key];
+      const t = themes[key] || themes.rookie;
       document.documentElement.style.setProperty('--accent1', t.accent1);
       document.documentElement.style.setProperty('--accent2', t.accent2);
     }
 
     // =============================================
-    // WEB AUDIO — generate sounds without files
+    // SOUND
     // =============================================
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
     function playSound(type) {
-      const osc = audioCtx.createOscillator();
+      const osc  = audioCtx.createOscillator();
       const gain = audioCtx.createGain();
       osc.connect(gain);
       gain.connect(audioCtx.destination);
@@ -554,23 +686,18 @@
         osc.frequency.setValueAtTime(660, audioCtx.currentTime + 0.1);
         gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.4);
+        osc.start(); osc.stop(audioCtx.currentTime + 0.4);
       } else if (type === 'wrong') {
         osc.frequency.setValueAtTime(220, audioCtx.currentTime);
         osc.frequency.setValueAtTime(180, audioCtx.currentTime + 0.1);
         gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
-        osc.start();
-        osc.stop(audioCtx.currentTime + 0.3);
+        osc.start(); osc.stop(audioCtx.currentTime + 0.3);
       } else if (type === 'levelup') {
-        // Plays a little ascending melody
-        const notes = [392, 523, 659, 784];
-        notes.forEach((freq, i) => {
+        [392, 523, 659, 784].forEach((freq, i) => {
           const o = audioCtx.createOscillator();
           const g = audioCtx.createGain();
-          o.connect(g);
-          g.connect(audioCtx.destination);
+          o.connect(g); g.connect(audioCtx.destination);
           o.frequency.value = freq;
           g.gain.setValueAtTime(0.2, audioCtx.currentTime + i * 0.12);
           g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + i * 0.12 + 0.3);
@@ -597,13 +724,68 @@
       hintUsed: false,
       hintedWords: [],
       currentRank: 'Rookie Decoder',
+      sessionPuzzles: 0,   // puzzles attempted this session
     };
 
     const usedSentences = [];
     let bankIndex = 0;
 
     // =============================================
-    // LOCAL SENTENCE BANK
+    // LOCALSTORAGE — save and load progress
+    // =============================================
+    function saveProgress() {
+      const data = {
+        playerName:   state.playerName,
+        playerAge:    state.playerAge,
+        level:        state.level,
+        solved:       state.solved,
+        bestStreak:   state.bestStreak,
+        totalCorrect: state.totalCorrect,
+        totalAttempts:state.totalAttempts,
+        currentRank:  state.currentRank,
+      };
+      localStorage.setItem('cipherGameSave', JSON.stringify(data));
+    }
+
+    function loadProgress() {
+      const saved = localStorage.getItem('cipherGameSave');
+      if (!saved) return null;
+      try { return JSON.parse(saved); }
+      catch(e) { return null; }
+    }
+
+    function clearSavedData() {
+      localStorage.removeItem('cipherGameSave');
+      document.getElementById('returning-banner').style.display = 'none';
+      document.getElementById('player-name').value = '';
+      document.getElementById('player-age').value  = '';
+    }
+
+    // =============================================
+    // CHECK FOR RETURNING PLAYER on page load
+    // =============================================
+    window.addEventListener('load', () => {
+      const saved = loadProgress();
+      if (saved) {
+        applyTheme('rookie');
+        document.getElementById('player-name').value = saved.playerName;
+        document.getElementById('player-age').value  = saved.playerAge;
+
+        const accuracy = saved.totalAttempts > 0
+          ? Math.round((saved.totalCorrect / saved.totalAttempts) * 100) + '%'
+          : '--';
+
+        document.getElementById('returning-welcome').textContent =
+          `Welcome back, ${saved.playerName}!`;
+        document.getElementById('returning-stats').textContent =
+          `Level ${saved.level} • ${saved.solved} solved • ${accuracy} accuracy`;
+        document.getElementById('returning-banner').style.display = 'flex';
+        document.getElementById('welcome-rank').textContent = saved.currentRank;
+      }
+    });
+
+    // =============================================
+    // SENTENCE BANK
     // =============================================
     const sentenceBank = [
       // === EASY (short, simple) ===
@@ -678,15 +860,12 @@
     // RANKS
     // =============================================
     const ranks = [
-      { minLevel: 1, emoji: '🔰', title: 'Rookie Decoder',  theme: 'rookie'  },
-      { minLevel: 3, emoji: '🔍', title: 'Code Breaker',    theme: 'breaker' },
-      { minLevel: 5, emoji: '🧠', title: 'Mind Bender',     theme: 'bender'  },
-      { minLevel: 7, emoji: '⚡', title: 'Cipher Master',   theme: 'master'  },
+      { minLevel: 1, emoji: '🔰', title: 'Rookie Decoder', theme: 'rookie'  },
+      { minLevel: 3, emoji: '🔍', title: 'Code Breaker',   theme: 'breaker' },
+      { minLevel: 5, emoji: '🧠', title: 'Mind Bender',    theme: 'bender'  },
+      { minLevel: 7, emoji: '⚡', title: 'Cipher Master',  theme: 'master'  },
     ];
 
-    // =============================================
-    // TRANSFORMATIONS
-    // =============================================
     const transforms = [
       'rotate(45deg)',  'rotate(90deg)',   'rotate(135deg)',
       'rotate(180deg)', 'rotate(225deg)',  'rotate(270deg)',
@@ -695,9 +874,6 @@
       'rotate(90deg) scaleX(-1)', 'rotate(180deg) scaleY(-1)',
     ];
 
-    // =============================================
-    // DIFFICULTY
-    // =============================================
     function getDifficulty() {
       if (state.level <= 2) return { label: '🔰 Rookie',  angles: [0,1,3,6],              wordCount: '3 to 4', theme: 'rookie'  };
       if (state.level <= 4) return { label: '🔍 Breaker', angles: [0,1,2,3,4,5,6],        wordCount: '4 to 5', theme: 'breaker' };
@@ -705,9 +881,6 @@
       return                       { label: '⚡ Master',  angles: transforms,              wordCount: '7 to 9', theme: 'master'  };
     }
 
-    // =============================================
-    // GET RANK
-    // =============================================
     function getRankInfo() {
       for (let i = ranks.length - 1; i >= 0; i--) {
         if (state.level >= ranks[i].minLevel) return ranks[i];
@@ -716,26 +889,29 @@
     }
 
     // =============================================
-    // UPDATE STATS DISPLAY
+    // UPDATE UI
     // =============================================
     function updateStats() {
       const accuracy = state.totalAttempts === 0
         ? '--'
         : Math.round((state.totalCorrect / state.totalAttempts) * 100) + '%';
-
       document.getElementById('stat-accuracy').textContent = accuracy;
       document.getElementById('stat-streak').textContent   = state.streak + '🔥';
       document.getElementById('stat-best').textContent     = state.bestStreak;
     }
 
+    function updateProgress() {
+      const pct = Math.min((state.sessionPuzzles / 10) * 100, 100);
+      document.getElementById('progress-fill').style.width = pct + '%';
+      document.getElementById('progress-text').textContent = state.sessionPuzzles + ' / 10';
+    }
+
     // =============================================
-    // SHOW LEVEL UP OVERLAY
+    // LEVEL UP OVERLAY
     // =============================================
     function showLevelUp(rankInfo) {
       playSound('levelup');
-
-      const accuracy = state.totalAttempts === 0
-        ? '0%'
+      const accuracy = state.totalAttempts === 0 ? '0%'
         : Math.round((state.totalCorrect / state.totalAttempts) * 100) + '%';
 
       document.getElementById('levelup-emoji').textContent    = rankInfo.emoji;
@@ -744,12 +920,67 @@
       document.getElementById('lu-solved').textContent        = state.solved;
       document.getElementById('lu-accuracy').textContent      = accuracy;
       document.getElementById('lu-streak').textContent        = state.bestStreak;
-
       document.getElementById('levelup-overlay').classList.add('active');
     }
 
     function closeLevelUp() {
       document.getElementById('levelup-overlay').classList.remove('active');
+      loadNewPuzzle();
+    }
+
+    // =============================================
+    // GAME OVER OVERLAY
+    // =============================================
+    function showGameOver() {
+      playSound('levelup');
+      const rankInfo = getRankInfo();
+      const accuracy = state.totalAttempts === 0 ? '0%'
+        : Math.round((state.totalCorrect / state.totalAttempts) * 100) + '%';
+
+      document.getElementById('go-solved').textContent   = state.solved;
+      document.getElementById('go-accuracy').textContent = accuracy;
+      document.getElementById('go-streak').textContent   = state.bestStreak;
+      document.getElementById('go-rank').textContent     = rankInfo.emoji;
+      document.getElementById('gameover-subtitle').textContent =
+        `Great job, ${state.playerName}! Here's your session summary.`;
+
+      // Build share text
+      const shareText =
+        `🔐 Cipher Decode Game\n` +
+        `👤 Player: ${state.playerName}\n` +
+        `🏆 Rank: ${rankInfo.emoji} ${rankInfo.title}\n` +
+        `✅ Solved: ${state.solved}/10\n` +
+        `🎯 Accuracy: ${accuracy}\n` +
+        `🔥 Best Streak: ${state.bestStreak}\n` +
+        `🎮 Try it yourself!`;
+
+      document.getElementById('share-box').textContent = shareText;
+      document.getElementById('gameover-overlay').classList.add('active');
+
+      saveProgress();
+    }
+
+    // =============================================
+    // COPY SCORE TO CLIPBOARD
+    // =============================================
+    function copyScore() {
+      const text = document.getElementById('share-box').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.getElementById('copy-btn');
+        btn.textContent = '✅ Copied!';
+        setTimeout(() => { btn.textContent = '📋 Copy Score'; }, 2000);
+      }).catch(() => {
+        alert('Could not copy. Please copy the text manually!');
+      });
+    }
+
+    // =============================================
+    // PLAY AGAIN
+    // =============================================
+    function playAgain() {
+      state.sessionPuzzles = 0;
+      state.streak         = 0;
+      document.getElementById('gameover-overlay').classList.remove('active');
       loadNewPuzzle();
     }
 
@@ -766,9 +997,6 @@
       return false;
     }
 
-    // =============================================
-    // FALLBACK SENTENCE
-    // =============================================
     function getFallbackSentence() {
       if (bankIndex === 0) {
         for (let i = sentenceBank.length - 1; i > 0; i--) {
@@ -801,14 +1029,16 @@
       document.getElementById('dot-2').className = 'dot';
       document.getElementById('dot-3').className = 'dot';
 
-      document.getElementById('submit-btn').disabled    = false;
-      document.getElementById('hint-btn').disabled      = false;
-      document.getElementById('skip-btn').disabled      = false;
-      document.getElementById('answer-input').disabled  = false;
+      document.getElementById('submit-btn').disabled   = false;
+      document.getElementById('hint-btn').disabled     = false;
+      document.getElementById('skip-btn').disabled     = false;
+      document.getElementById('answer-input').disabled = false;
+      document.getElementById('answer-input').value    = '';
 
-      document.getElementById('hint-box').className    = 'hint-box';
-      document.getElementById('hint-box').textContent  = '💡 Hint: ';
+      document.getElementById('hint-box').className   = 'hint-box';
+      document.getElementById('hint-box').textContent = '💡 Hint: ';
       document.getElementById('cipher-area').className = 'cipher-area';
+      document.getElementById('feedback').textContent  = '';
     }
 
     // =============================================
@@ -819,10 +1049,22 @@
       const age  = document.getElementById('player-age').value.trim();
       if (!name || !age) { alert('Please enter your name and age!'); return; }
 
+      // Load saved progress if name matches
+      const saved = loadProgress();
+      if (saved && saved.playerName === name) {
+        state.level         = saved.level;
+        state.solved        = saved.solved;
+        state.bestStreak    = saved.bestStreak;
+        state.totalCorrect  = saved.totalCorrect;
+        state.totalAttempts = saved.totalAttempts;
+        state.currentRank   = saved.currentRank;
+      }
+
       state.playerName = name;
       state.playerAge  = parseInt(age);
 
-      document.getElementById('game-subtitle').textContent = `Welcome, ${name}! Decode the cipher below.`;
+      document.getElementById('game-subtitle').textContent =
+        `Welcome, ${name}! Decode the cipher below.`;
       showScreen('game-screen');
       loadNewPuzzle();
     }
@@ -831,23 +1073,28 @@
     // LOAD NEW PUZZLE
     // =============================================
     async function loadNewPuzzle() {
+      // Check if session is complete
+      if (state.sessionPuzzles >= 10) {
+        showGameOver();
+        return;
+      }
+
       const diff = getDifficulty();
       resetPuzzleState();
-
-      // Apply theme color for this difficulty
       applyTheme(diff.theme);
 
-      document.getElementById('cipher-area').innerHTML = '<span class="loading-text">Generating your cipher...</span>';
-      document.getElementById('answer-input').value    = '';
-      document.getElementById('feedback').textContent  = '';
+      document.getElementById('cipher-area').innerHTML =
+        '<span class="loading-text">Generating your cipher...</span>';
       document.getElementById('difficulty-badge').textContent = diff.label;
       document.getElementById('level-display').textContent    = state.level;
       document.getElementById('solved-display').textContent   = state.solved;
 
       const rankInfo = getRankInfo();
-      document.getElementById('rank-display').textContent = rankInfo.emoji + ' ' + rankInfo.title;
+      document.getElementById('rank-display').textContent =
+        rankInfo.emoji + ' ' + rankInfo.title;
 
       updateStats();
+      updateProgress();
 
       const sentence = await generateSentence(diff.wordCount);
       state.currentSentence = sentence;
@@ -880,7 +1127,7 @@
                           - Every attempt must use a completely different topic and structure.
                           - Return the sentence ONLY. No quotes. No explanation.
                           ${historyText}
-                          Attempt number: ${attempt + 1} — make it different from all previous.`
+                          Attempt number: ${attempt + 1}.`
               }]
             })
           });
@@ -917,10 +1164,10 @@
           span.dataset.original = word[i];
 
           const availableTransforms = diff.angles;
-          const randomIndex = Math.floor(Math.random() * availableTransforms.length);
-          const transform = typeof availableTransforms[randomIndex] === 'string'
-            ? availableTransforms[randomIndex]
-            : transforms[availableTransforms[randomIndex]];
+          const ri = Math.floor(Math.random() * availableTransforms.length);
+          const transform = typeof availableTransforms[ri] === 'string'
+            ? availableTransforms[ri]
+            : transforms[availableTransforms[ri]];
 
           span.style.transform = transform;
           span.textContent = word[i];
@@ -932,13 +1179,12 @@
     }
 
     // =============================================
-    // USE HINT
+    // HINT
     // =============================================
     function useHint() {
       if (state.hintUsed) return;
-
       const words = state.currentSentence.split(' ');
-      const available = words.map((w, i) => i).filter(i => !state.hintedWords.includes(i));
+      const available = words.map((w,i) => i).filter(i => !state.hintedWords.includes(i));
       if (available.length === 0) return;
 
       const wordIndex = available[Math.floor(Math.random() * available.length)];
@@ -955,21 +1201,21 @@
           l.classList.add('hinted');
         });
       }
-
       document.getElementById('hint-btn').disabled = true;
     }
 
     // =============================================
-    // SKIP PUZZLE
+    // SKIP
     // =============================================
     function skipPuzzle() {
       state.streak = 0;
+      state.sessionPuzzles++;
       updateStats();
+      updateProgress();
 
       const feedback = document.getElementById('feedback');
       feedback.textContent = `⏭ Skipped! The answer was: "${state.currentSentence}"`;
       feedback.className = 'feedback reveal';
-
       playSound('wrong');
 
       document.getElementById('submit-btn').disabled = true;
@@ -987,29 +1233,28 @@
       const feedback = document.getElementById('feedback');
       const area     = document.getElementById('cipher-area');
 
-      const normalize     = str => str.toLowerCase().trim();
+      const normalize    = str => str.toLowerCase().trim();
       const playerAnswer  = normalize(input);
       const correctAnswer = normalize(state.currentSentence);
 
       state.totalAttempts++;
 
       if (playerAnswer === correctAnswer) {
-        // ✅ CORRECT
         state.totalCorrect++;
         state.solved++;
         state.level++;
         state.streak++;
+        state.sessionPuzzles++;
         if (state.streak > state.bestStreak) state.bestStreak = state.streak;
 
         playSound('correct');
-
         feedback.textContent = '✅ Correct! Well decoded!';
         feedback.className   = 'feedback correct';
         area.classList.add('glow-correct');
-
         updateStats();
+        updateProgress();
+        saveProgress();
 
-        // Check if rank changed
         const newRankInfo = getRankInfo();
         if (newRankInfo.title !== state.currentRank) {
           state.currentRank = newRankInfo.title;
@@ -1020,10 +1265,8 @@
         }
 
       } else {
-        // ❌ WRONG
         state.wrongAttempts++;
         state.streak = 0;
-
         playSound('wrong');
 
         area.classList.remove('shake');
@@ -1032,17 +1275,16 @@
 
         const dot = document.getElementById(`dot-${state.wrongAttempts}`);
         if (dot) dot.className = 'dot wrong';
-
         updateStats();
 
         if (state.wrongAttempts >= 3) {
+          state.sessionPuzzles++;
+          updateProgress();
           feedback.textContent = `❌ The answer was: "${state.currentSentence}"`;
           feedback.className   = 'feedback reveal';
-
           document.getElementById('submit-btn').disabled   = true;
           document.getElementById('hint-btn').disabled     = true;
           document.getElementById('answer-input').disabled = true;
-
           setTimeout(() => loadNewPuzzle(), 3000);
         } else {
           feedback.textContent = `❌ Not quite! ${3 - state.wrongAttempts} attempt(s) remaining.`;
